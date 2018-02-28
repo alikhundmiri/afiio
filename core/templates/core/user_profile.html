@@ -77,9 +77,9 @@
 </style>
 {% endblock %}
 
-{% block meta_description %}sharing your internet portfolio, The simplest way.{% endblock %}
+{% block meta_description %}{% if user.profile.profession %}{{user.profile.profession }}{% else %}Internet Business card available for online reference and sharing many links to your projects, stored else where on the internet!.{% endif %}{% endblock %}
 
-{% block meta_author %}Ali Khundmiri{% endblock %}
+{% block meta_author %}{{user.username}}{% endblock %}
 
 {% block content_1 %}
 <div class="container">
