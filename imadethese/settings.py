@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j&j_0anvef4@$^$l6-0md+5(sskkb)3mcyrd7irkob*ax1)ve0'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'j&j_0anvef4@$^$l6-0md+5(sskkb)3mcyrd7irkob*ax1)ve0')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,6 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'user'
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,7 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party apps
-    'crispy_forms'
+    'crispy_forms',
+    'widget_tweaks',
+    'social_django',
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -78,6 +84,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'imadethese.wsgi.application'
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -88,6 +102,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
 
 
 # Password validation
@@ -114,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -140,3 +158,54 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 
 MEDIA_URL = "/media_cdn/"
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
+
+
+########################################################################################
+
+CUSTOM_PROJECT_NAME = "afiio"
+
+AWS_STORAGE_BUCKET_NAME = 'side-projects'
+AWS_ACCESS_KEY_ID = os.environ.get('S3_KEY', 'AKIAJ23FPQHICFTRWIVQ')
+AWS_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET' , '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')
+
+# Tell django-storages that when coming up with the URL for an item in S3 storage, keep
+# it simple - just use this domain plus the path. (If this isn't set, things get complicated).
+# This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
+# We also use it in the next setting.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# NOW REPLACING THESE LINES TO USE OUR S3 BUCKET MORE ELEGANTLY.
+# NOW WE WILL HAVE /static/ FOLDER FOR STATIC FILES, /media/ FOR OUR MEDIA FILES
+
+# # This is used by the `static` template tag from `static`, if you're using that. Or if anything else
+# # refers directly to STATIC_URL. So it's safest to always set it.
+# STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+#
+# # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
+# # you run `collectstatic`).
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+
+# Grab all the files from here, and put them in the S3 Bucket!!
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+# Added this on 19th August. After learning from experiments on Ritrew app.
+
+
+# I JUST ADDED A FILE NAMED cumstom_storages.py IN THE SAME DIRECTORY AS manage.oy
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+STATIC_URL = "https://%s/%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, CUSTOM_PROJECT_NAME, STATICFILES_LOCATION)
+
+# FROM HERE IS THE SETTINGS FOR MEDIA FILES
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, CUSTOM_PROJECT_NAME, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+# THESE LINES WILL SAY THE EXPIRATION OF THIS DATA HAS NOT YET COME, SO USE THESE TILL IT EXPIRES.
+AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'Cache-Control': 'max-age=94608000',
+}
+
