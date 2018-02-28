@@ -25,7 +25,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'j&j_0anvef4@$^$l6-0md+5(sskkb)3mcyrd7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.afiio.herokuapp.com/','afiio.herokuapp.com/', '127.0.0.1', 'www.afiio.com', 'afiio.com']
+ALLOWED_HOSTS = [
+'https://afiio.herokuapp.com/',
+'http://afiio.herokuapp.com/', 
+'afiio.herokuapp.com/',
+'http://127.0.0.1:8000/',
+'127.0.0.1',
+'www.afiio.com', 
+'afiio.com']
 
 
 LOGIN_URL = 'login'
