@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %}Page | {{ block.super }}{% endblock %}
+
+{% block header0 %}
+<link href="{% static 'pricing.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block meta_description %}Pricing details about this website. Nothing here is free, but I try to keep this place adverts free.{% endblock %}
+
+{% block meta_author %}Ali Khundmiri{% endblock %}
+
+{% block content_2 %}
+<!-- Custom styles for this template -->
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<h1 class="display-4">Pricing</h1>
+	<p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
+</div>
+
+{% include 'content_pricing.html' %}
+
+{% endblock %}
+{% block post_footer %}
+
+<script>
+	Holder.addTheme('thumb', {
+		bg: '#55595c',
+		fg: '#eceeef',
+		text: 'Thumbnail'
+	});
+</script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="{% block meta_description %}{% endblock %}">
+	<meta name="author" content="{% block meta_author %}{% endblock %}">
+
+
+	<title>{% block title %}Afiio : Online business card!{% endblock %}</title>
+	<!-- Bootstrap core CSS -->
+	<link href="{% static 'base/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'sticky-footer-navbar.css' %}" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<style>
+	body {
+		padding-top: 54px;
+	}
+	@media (min-width: 992px) {
+		body {
+			padding-top: 56px;
+		}
+	}
+
+</style>
+{% block header0 %}
+{% endblock %}
+</head>
+
+<body>
+
+	{% include 'navbar.html' %}
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3"></div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<!-- content -->
+				{% block content_1 %}
+				{% endblock %}
+			</div>
+			<div class="col-lg-3 col-md-3"></div>
+		</div>
+	</div>
+	{% block content_2 %}
+	{% endblock %}
+
+	<div style="margin-top: 100px"></div>
+
+	{% include 'footer.html' %}
+
+	{% block post_footer %}
+	{% endblock %}
+	<!-- Bootstrap core JavaScript -->
+	<script src="{% static 'base/vendor/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'base/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>

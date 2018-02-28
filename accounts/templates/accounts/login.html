@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% load static from staticfiles %}
+
+{% block header0 %}
+    <link href="{% static 'login/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    {{nbar}} | {{ block.super }}
+{% endblock %}
+
+{% block content_2 %}
+
+
+<div class="row">
+</div>
+<div class="container">
+      <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 text-center">
+            {% if nbar == 'login' %}
+                <h1 class="display-5" id="clocktext">
+                    Login
+                </h1>
+                <h2 class="form-signin-heading"><small>Welcome back!</small></h2>
+            {% elif nbar == 'register' %}
+                <h1 class="display-5" id="clocktext">
+                    Register
+                </h1>
+                <h2 class="form-signin-heading"><small>Let's Create your Account!</small></h2>
+            {% endif %}
+            <form class="form-signin" method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+                <br>
+                {{ form }}
+                <br>
+                <br>
+                <input type='submit' class='btn btn-lg btn-primary btn-block' name='next' value='{{ nbar }}'/>
+            </form>
+            <hr>
+            <br>
+            {% if nbar == 'login' %}
+                <p>New Here? <a href="/register">Register!</a></p>
+            {% elif nbar == 'register' %}
+                <p>Looking to login? <a href="/login">Login!</a></p>
+            {% endif %}            
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

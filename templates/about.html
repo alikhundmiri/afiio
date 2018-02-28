@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %}About | {{ block.super }}{% endblock %}
+
+{% block header0 %}
+{% endblock %}
+
+{% block meta_description %}This website was created by Ali Khundmiri, who wanted a place to store all the projects he has done, specially built to showcase it all to the world. {% endblock %}
+
+{% block meta_author %}Ali Khundmiri{% endblock %}
+
+{% block content_1 %}
+	{% include 'content_about.html' %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %}Limit Reached | {{ block.super }}{% endblock %}
+
+{% block header0 %}
+{% endblock %}
+
+{% block meta_description %}This site is free up to 3 links, and you are required to purchase a package to add more details.{% endblock %}
+
+{% block meta_author %}Ali Khundmiri{% endblock %}
+
+{% block content_1 %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h1 class="mt-5">Hey!</h1>
+				<p class="lead">Looks like you are enjoying this website. <br>Congratulates on creating 3 links, but you need to purchase the subscription package to continue more links your profile.</p>
+				<ul class="list-unstyled">
+					<li><a href="">Why am I charging For this website?</a></li>
+					<li><a href="">Pay Now</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

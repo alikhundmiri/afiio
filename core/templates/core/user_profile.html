@@ -1,0 +1,155 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %} @{{user.username}}'s | {{ block.super }}{% endblock %}
+
+{% block header0 %}
+<style type="text/css">
+
+.user-details{
+	padding: 15px;
+	background: #73FFCB;
+	padding-top: 50px;
+	border-radius: 10px;
+}
+
+.product-list {
+	margin-top: 5px;
+	min-height: 10px;
+	border-radius: 5px;
+	padding: 10px 0px 10px 20px;
+}
+
+.product-item{
+	background: #D15959;
+	text-align: left;
+}
+
+.product-item-private{
+	background: #F99393;
+	text-align: left;
+}
+
+.links-section{
+	padding: 10px 0px 10px 0px;
+
+}
+
+.product-add-new{
+	background: green;
+}
+
+.product-empty{
+	background: pink;
+}
+
+.product-empty p{
+	color: white;
+}
+.product-add-new a{
+	color: white;
+	font-size: 20px
+}
+
+
+.product-item a{
+	color: white;
+}
+.product-item p{
+	color: white;
+}
+.product-item h3{
+	color: white;
+}
+
+
+.product-item-private a{
+	color: #DDDDDD;
+}
+.product-item-private p{
+	color: #DDDDDD;
+}
+.product-item-private h3{
+	color: #DDDDDD;
+}
+
+</style>
+{% endblock %}
+
+{% block meta_description %}sharing your internet portfolio, The simplest way.{% endblock %}
+
+{% block meta_author %}Ali Khundmiri{% endblock %}
+
+{% block content_1 %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<div class="row user-details">
+				<div class="col-lg">
+					<img src="https://placeimg.com/100/100/tech" class="img-responsive" alt="Cinque Terre" style="width:100px; height: 100px">
+					<h1>@{{user.username}}</h1>
+					{% if user.profile.profession %}
+					<span class="text-muted">
+						<p class="mute">{{user.profile.profession }}</p>
+					</span>
+					{% endif %}
+					{% if user.profile.bio %}
+					<p class="lead">{{user.profile.bio|linebreaks}}</p>
+					{% endif %}
+					<!-- <p class="lead">Facebook | Instagram | Twitter </p> -->
+				</div>
+			</div>
+			{% if request.user.username == user.username %}
+			<div class="row">
+				<div class="col-lg product-list product-add-new">
+					<a href="{% url 'user:create_product' request.user.username %}">Add new Link</a>
+				</div>
+			</div>
+			{% endif %}
+
+			{% for product in products %}
+			<div class="row">
+				<div class="col-lg product-list {% if product.public_display %}product-item{% else %}product-item-private{% endif %}">
+					<div class="row">
+						<div class="col-lg-9 col-md-9 col-sm-9">
+							<h3><a href="{{ product.website }}" target="_blank">{{ product.product_name }}</a></h3>
+							{% if product.product_description %}
+							<p>{{ product.product_description|linebreaks }}</p>
+							{% endif %}
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-2 links-section">
+							
+							<a href="{{ product.website }}" class="btn btn-sm btn-danger">
+								link
+							</a>
+							{% if request.user.username == user.username %}
+							<a href="{{ product.get_editable_url }}" class="btn btn-sm btn-dark">
+								edit
+							</a>
+							{% endif %}
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			{% empty %}
+			<div class="row">
+				<div class="col-lg product-list product-empty">
+					<p>No Products yet</p>
+				</div>
+			</div>			
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% if not request.user.is_authenticated %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<p class="lead">Like this? <a href="{% url 'register' %}">Make your own</a></p>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
