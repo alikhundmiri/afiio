@@ -27,12 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 'https://afiio.herokuapp.com/',
-'http://afiio.herokuapp.com/', 
-'afiio.herokuapp.com/',
+"http://afiio.herokuapp.com/",
+"afiio.herokuapp.com",
 'http://127.0.0.1:8000/',
-'127.0.0.1',
-'www.afiio.com', 
-'afiio.com']
+'127.0.0.1',]
 
 
 LOGIN_URL = 'login'
