@@ -172,8 +172,8 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
 CUSTOM_PROJECT_NAME = "afiio"
 
 AWS_STORAGE_BUCKET_NAME = 'side-projects'
-AWS_ACCESS_KEY_ID = os.environ.get('S3_KEY', 'AKIAJ23FPQHICFTRWIVQ')
-AWS_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET' , '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')
+AWS_ACCESS_KEY_ID = os.environ.get('S3_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET')
 
 # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
 # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
