@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.db.models import Q, Count
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import product
 from .forms import ProductForm
+import datetime
 
 # Create your views here.
 def index(request):
@@ -100,3 +102,23 @@ def edit_product(request, slug=None, username=None):
 
 	}
 	return render(request, 'general_form.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def super_user(request, username=None):
+	time_24_hours_ago = datetime.datetime.now() - datetime.timedelta(days=1)
+
+	users = User.objects.all().count()
+	links = product.objects.all().count()
+	# no_links = products.objects.filter()
+	no_links2 = product.objects.annotate(number_of_links=Count('user', distinct=True))
+	# all_cats = product_catagory.objects.annotate(number_of_products=Count('catagory', distinct=True))
+	print(no_links2)
+	u_last24h = User.objects.filter(date_joined__gte=time_24_hours_ago)
+
+	context = {
+		"users" : users,
+		'links' : links,
+		"u_last24h" : u_last24h,
+	}
+	return render(request, 'core/super_user.html', context)

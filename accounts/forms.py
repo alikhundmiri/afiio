@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User as User_
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import (
     authenticate,
     get_user_model,
@@ -50,12 +52,11 @@ class UserRegisterForm(forms.ModelForm):
         return email
 
 
-
-
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = [
+        "avatar",
         "bio",
         "profession"
         ]
@@ -64,6 +65,9 @@ class ProfileForm(forms.ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.fields["bio"].help_text = "A brief description about you are your work or profession in less than 500 words"
         self.fields["profession"].help_text = "Your Profession! Be creative and go wild, you have a limit of 30 characters"
+
+    def clean_avatar(self):
+        avatar = self.cleaned_data.get('avatar')
 
     def clean_bio(self):
         # print("Validating...")
@@ -86,3 +90,15 @@ class ProfileForm(forms.ModelForm):
             raise forms.ValidationError("This field contains only invalid characters")
         # print("Valid")
         return profession        
+
+
+class EditProfileForm(UserChangeForm):
+    class Meta:
+        model = User_
+        fields = (
+            'email',            
+            'first_name',
+            'last_name',
+            'password',
+            )
+

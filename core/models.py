@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
 
+def upload_location(Profile, filename):
+    return "%s/%s/%s" %(Profile.app_name,Profile.user, filename)
 
 
 class product(models.Model):
@@ -41,22 +43,32 @@ class product(models.Model):
 		verbose_name_plural = 			"Products"
 
 
-
 class Profile(models.Model):
-    user 					=			models.OneToOneField(User, on_delete=models.CASCADE)
-    bio 					=			models.TextField(max_length=500, blank=True)
-    profession 				=			models.CharField(max_length=30, blank=True)
-    paid_user				=			models.BooleanField(default=False)
+	app_name 				=			'profiles'
+	user 					=			models.OneToOneField(User, on_delete=models.CASCADE)
+	bio 					=			models.TextField(max_length=500, blank=True)
+	profession 				=			models.CharField(max_length=30, blank=True)
+	avatar					=			models.ImageField(
+		upload_to=upload_location,
+		null = True,
+		blank = True,
+		height_field = "height_field",
+		width_field = "width_field",
+	)
+	height_field 			=			models.IntegerField(default=0)
+	width_field 			=			models.IntegerField(default=0)
+
+	paid_user				=			models.BooleanField(default=False)
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+	if created:
+		Profile.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+	instance.profile.save()
 
 
 

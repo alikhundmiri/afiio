@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %}Settings | {{ block.super }}{% endblock %}
+
+{% block header0 %}
+{% endblock %}
+
+{% block meta_description %}sharing your internet portfolio, The simplest way.{% endblock %}
+
+{% block meta_author %}Ali Khundmiri{% endblock %}
+
+{% block content_1 %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="mt-5">Settings</h1>
+			<hr>
+			<div class="col-lg-12">
+				
+				<a class="float-right" href="{% url 'user:first_last_name' request.user.username %}">edit</a>			
+				<h4 class="float-left">User Details</h4>
+			</div>
+			<!-- table for user detail -->
+			<table class="table table-hover">
+				<tbody>
+					<tr>
+						<th scope="row">Email address</th>
+						<td>{{request.user.email}}</td>
+					</tr>
+					<tr>
+						<th scope="row">First Name</th>
+						<td>{% if request.user.first_name %}{{request.user.first_name}}{% else %}<i>add now</i>{% endif %}</td>
+					</tr>
+					<tr>
+						<th scope="row">Last Name</th>
+						<td>{% if request.user.last_name %}{{request.user.last_name}}{% else %}<i>add now</i>{% endif %}</td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+			<div class="col-lg-12">
+				<a href="{% url 'user:edit_bio' request.user.username %}" class="float-right">edit</a>
+				<h4 class="float-left">Profile Information</h4>
+			</div>
+			<!-- Table for user bio -->
+			<br>
+			<p>Profile image here</p>
+			<table class="table table-hover">
+				<tbody>
+					<tr>
+						<th scope="row">Profession</th>
+						<td>{% if request.user.profile.profession %}{{request.user.profile.profession}}{% else %}<i>add now</i>{% endif %}</td>
+					</tr>
+					<tr>
+						<th scope="row">Bio</th>
+						<td>{% if request.user.profile.bio %}{{request.user.profile.bio}}{% else %}<i>add now</i>{% endif %}</td>
+					</tr>
+				</tbody>
+			</table>			
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path, include
 from . import views
-from accounts.views import (edit_bio, new_bio)
+from accounts.views import (edit_bio, new_bio, first_last_name, change_password)
 
 app_name = 'core'
 
@@ -24,10 +24,13 @@ urlpatterns = [
 
     path('@<str:username>/', include([
         path('', views.user_profile, name='user_profile'),
+        path('superuser/', views.super_user, name='super_user'),
         path('new_bio/', new_bio, name='new_bio'),
         path('edit_bio/', edit_bio, name='edit_bio'),
+        path('user_info/', first_last_name, name='first_last_name'),
         path('new/', views.create_product, name='create_product'),
         path('limit_reach/', views.limit_reach, name='limit_reach'),
+        path('password/', change_password, name='change_password'),
         path('edit/<slug:slug>/', views.edit_product, name='edit_product'),
     ])),
 

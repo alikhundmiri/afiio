@@ -88,7 +88,8 @@
 			<div class="row user-details">
 				<div class="col-lg">
 					<img src="https://placeimg.com/100/100/tech" class="img-responsive" alt="Cinque Terre" style="width:100px; height: 100px">
-					<h1>@{{user.username}}</h1>
+					{% if user.get_full_name %}<h2>{{user.first_name}} <b>{{user.last_name}}</b></h2><p>@{{user.username}}</p>{% else %}<p>@{{user.username}}</p>{% endif %}
+					
 					{% if user.profile.profession %}
 					<span class="text-muted">
 						<p class="mute">{{user.profile.profession }}</p>
