@@ -29,8 +29,11 @@ urlpatterns = [
         path('edit_bio/', edit_bio, name='edit_bio'),
         path('user_info/', first_last_name, name='first_last_name'),
         path('new/', views.create_product, name='create_product'),
+        path('new_category/', views.create_category, name='create_category'),
+        
         path('limit_reach/', views.limit_reach, name='limit_reach'),
         path('password/', change_password, name='change_password'),
+        path('edit_category/<slug:slug>/', views.edit_category, name='edit_category'),
         path('edit/<slug:slug>/', views.edit_product, name='edit_product'),
     ])),
 

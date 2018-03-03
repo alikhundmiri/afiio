@@ -109,7 +109,18 @@
 			</div>
 			{% endif %}
 
+			{% for category in all_category %}
+				<h3>{{ category.category_name }}</h3>
+				{% for product in products %}
+					{% if product.product_type == category %}
+					<p>{{product.product_name}}</p>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+
+
 			{% for product in products %}
+
 			<div class="row">
 				<div class="col-lg product-list {% if product.public_display %}product-item{% else %}product-item-private{% endif %}">
 					<div class="row">

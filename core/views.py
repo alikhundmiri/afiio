@@ -5,8 +5,8 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404, HttpResponseRedirect
 from django.urls import reverse
 
-from .models import product
-from .forms import ProductForm
+from .models import product, product_category
+from .forms import ProductForm, CategoryForm
 import datetime
 
 # Create your views here.
@@ -23,6 +23,7 @@ def user_profile(request, username=None):
 
 	user = get_object_or_404(User, username=username)#.select_related('profile')
 	if username == request.user.username:
+		all_category = product_category.objects.filter(user=user)
 		products = product.objects.filter(user=user).order_by('-public_display', '-updated')
 	else:
 		products = product.objects.filter(user=user, public_display=True).order_by('-updated')
@@ -30,6 +31,7 @@ def user_profile(request, username=None):
 	context = {
 		"products" : products,
 		"user" : user,
+		"all_category" : all_category,
 	}
 	return render(request, 'core/user_profile.html', context)
 
@@ -60,16 +62,19 @@ def create_product(request, username=None):
 		else:
 			return HttpResponseRedirect(reverse('user:limit_reach', args=[username]))
 
-	form = ProductForm(request.POST or None)
-	if form.is_valid():
-		# product_name = form.cleaned_data.get("product_name")
-		instance = form.save(commit=False)
-		instance.user = request.user
+	if request.method == 'POST':
+		form = ProductForm(user, request.POST or None)
+		if form.is_valid():
+			# product_name = form.cleaned_data.get("product_name")
+			instance = form.save(commit=False)
+			instance.user = request.user
 
-		instance.save()
-		# form.save_m2m()
-		# catagory_utils.set_revenue_details(instance.catagory.slug)
-		return HttpResponseRedirect("/")
+			instance.save()
+			# form.save_m2m()
+			# catagory_utils.set_revenue_details(instance.catagory.slug)
+			return HttpResponseRedirect("/")
+	else:
+		form = ProductForm(user)
 
 	context = {
 		'form' : form,
@@ -85,7 +90,10 @@ def edit_product(request, slug=None, username=None):
 	instance = get_object_or_404(product, slug=slug)
 	if instance.user != request.user:
 		raise Http404
-	form = ProductForm(request.POST or None, instance = instance)
+	user = get_object_or_404(User, username=username)
+
+
+	form = ProductForm(user, request.POST or None, instance = instance)
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.user = request.user
@@ -102,6 +110,77 @@ def edit_product(request, slug=None, username=None):
 
 	}
 	return render(request, 'general_form.html', context)
+
+
+
+# ===========
+
+@login_required
+def create_category(request, username=None):
+	if not request.user.is_authenticated:
+		raise Http404
+
+	user = get_object_or_404(User, username=username)
+
+	if user.profile.paid_user:
+		pass
+	else:
+		category_ = 0
+		category_ = product_category.objects.filter(user=user).count()
+		if category_ <=2:
+			pass
+		else:
+			return HttpResponseRedirect(reverse('user:limit_reach', args=[username]))
+
+	if request.method == 'POST':
+		form = CategoryForm(user, request.POST or None)
+		if form.is_valid():
+			# product_name = form.cleaned_data.get("product_name")
+			instance = form.save(commit=False)
+			instance.user = request.user
+
+			instance.save()
+			# form.save_m2m()
+			# catagory_utils.set_revenue_details(instance.catagory.slug)
+			return HttpResponseRedirect("/")
+	else:
+		form = CategoryForm(user)
+
+	context = {
+		'form' : form,
+		"tab_text": "Submit New Category",
+		"top_text": "New Category",
+		"form_text": "Please enter A new unique Category name in the field below!",
+	}
+	return render(request, 'general_form.html', context)
+
+
+@login_required
+def edit_category(request, slug=None, username=None):
+	instance = get_object_or_404(product_category, slug=slug)
+	if instance.user != request.user:
+		raise Http404
+	user = get_object_or_404(User, username=username)
+
+
+	form = CategoryForm(user, request.POST or None, instance = instance)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		instance.user = request.user
+		instance.save()
+		# form.save_m2m()
+		# catagory_utils.set_revenue_details(instance.catagory.slug)
+		return HttpResponseRedirect("/")
+
+	context = {
+		'form' : form,
+		"tab_text": "Submit Changes",
+		"top_text": "Edit Category",
+		"form_text": "Please enter the new Category name in the field below!",
+
+	}
+	return render(request, 'general_form.html', context)
+
 
 
 @user_passes_test(lambda u: u.is_superuser)

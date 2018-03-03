@@ -9,9 +9,17 @@
 				<ul class="navbar-nav ml-auto">
 					{% if request.user.is_authenticated %}
 					
-					<li class="nav-item active">
-						<a class="nav-link" href="{% url 'user:create_product' request.user.username %}">New</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Create
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{% url 'user:create_product' request.user.username %}">Link</a>
+
+							<a class="dropdown-item" href="{% url 'user:create_category' request.user.username %}">Category</a>
+						</div>
 					</li>
+
 
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

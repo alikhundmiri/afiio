@@ -9,6 +9,14 @@ from django.utils.text import slugify
 def upload_location(Profile, filename):
     return "%s/%s/%s" %(Profile.app_name,Profile.user, filename)
 
+class product_category(models.Model):
+	user 					=			models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+	category_name			=			models.CharField(max_length=20, blank=False, null=False, default="")
+	slug 					=			models.SlugField(max_length=255, unique=True)
+
+	def __str__(self):
+		return(self.category_name)
+
 
 class product(models.Model):
 	# who is uploading this product
@@ -16,6 +24,8 @@ class product(models.Model):
 	# the product name
 	product_name			=			models.CharField(max_length=50, blank=False, null=False, default="")
 	product_description		=			models.TextField(max_length=280, blank=True, null=True, default="")
+	product_type			=			models.ForeignKey(product_category, related_name='type_category', blank=True, null=True, on_delete=models.CASCADE)
+
 	slug					=			models.SlugField(max_length=255, unique=True)
 
 	# To Avoid spam content
@@ -92,6 +102,26 @@ def pre_save_product(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = slug_for_product(instance)
 
+# SLUG FOR PRODUCT CATEGORY
+def slug_for_product_category(instance, new_slug=None):
+	slug = slugify(instance.category_name)
+	if new_slug is not None:
+		slug = new_slug
+	qs = product_category.objects.filter(slug=slug).order_by("-id")
+	exists = qs.exists()
+	if exists:
+		# print("slug: " + str(slug))
+		a = slug.split('-')
+		# print("a: " + str(a[0]))
+		new_slug = "%s-%s" %(a[0], qs.first().id)
+		# print("new_slug: " + str(new_slug))
+		# new_slug = "%s-%s" %(slug, qs.first().id)
+		return slug_for_product_category(instance, new_slug=new_slug)
+	return slug
+def pre_save_product_category(sender, instance, *args, **kwargs):
+	if not instance.slug:
+		instance.slug = slug_for_product_category(instance)
 
 
 pre_save.connect(pre_save_product, sender=product)
+pre_save.connect(pre_save_product_category, sender=product_category)
