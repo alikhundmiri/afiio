@@ -39,7 +39,7 @@ class product(models.Model):
 	updated					=			models.DateTimeField(auto_now=True, auto_now_add=False)
 
 	def __str__(self):
-		return(self.product_name + str(" By ") + self.user.username)
+		return(self.product_name)
 
 	# def get_claim_url(self):
 	# 	return reverse("user:claim_product", kwargs={"slug" : self.slug})

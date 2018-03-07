@@ -21,17 +21,29 @@ def index(request):
 def user_profile(request, username=None):
 	# users = User.objects.all()
 
+
 	user = get_object_or_404(User, username=username)#.select_related('profile')
 	if username == request.user.username:
+		# p_roduct = product.objects.annotate(number_of_links=Count('user', distinct=True))
+
 		all_category = product_category.objects.filter(user=user)
-		products = product.objects.filter(user=user).order_by('-public_display', '-updated')
+		product_exclude = product.objects.exclude(id__in=all_category.values_list('type_category__id',flat=True)).filter(user=user)
+
+		# products = product.objects.filter(user=user).order_by('-public_display', '-updated')
 	else:
-		products = product.objects.filter(user=user, public_display=True).order_by('-updated')
+		# products = product.objects.filter(user=user, public_display=True).order_by('-updated')
+		all_category = product_category.objects.filter(user=user)
+		product_exclude = product.objects.exclude(id__in=all_category.values_list('type_category__id',flat=True)).filter(user=user, public_display=True)
+	print("============   All catagory   ===============")
+	print(all_category)
+	print("============   Product exclude   ===============")
+	print(product_exclude)
 	
 	context = {
-		"products" : products,
+		# "products" : products,
 		"user" : user,
 		"all_category" : all_category,
+		"product_exclude" : product_exclude,
 	}
 	return render(request, 'core/user_profile.html', context)
 
