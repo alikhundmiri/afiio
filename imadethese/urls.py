@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from accounts.views import (settings_page, login_view, logout_view, register_view, edit_bio, new_bio)
-from core.views import index, about, price
+from core.views import index, about, price, random_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('about/', about, name='about'),
     path('price/', price, name='price'),
+    path('browse/', random_user, name='random_user'),
     path('settings/', settings_page, name='settings'),
     path('', include('core.urls', namespace='user')),
 ]

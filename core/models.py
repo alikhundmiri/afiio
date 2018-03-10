@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 
 def upload_location(Profile, filename):
-    return "%s/%s/%s" %(Profile.app_name,Profile.user, filename)
+    return "%s/%s/%s" %(Profile.app_name, Profile.user, filename)
 
 class product_category(models.Model):
 	user 					=			models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
@@ -67,6 +67,9 @@ class Profile(models.Model):
 	)
 	height_field 			=			models.IntegerField(default=0)
 	width_field 			=			models.IntegerField(default=0)
+	# what can i do for you
+	hire_me_if_want			=			models.TextField(max_length=100, blank=True)
+	looking_for				=			models.CharField(max_length=100, blank=True)
 
 	paid_user				=			models.BooleanField(default=False)
 

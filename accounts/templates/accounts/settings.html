@@ -16,7 +16,10 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="mt-5">Settings</h1>
-			<hr>
+			
+			<br>
+			<br>
+			<br>
 			<div class="col-lg-12">
 				
 				<a class="float-right" href="{% url 'user:first_last_name' request.user.username %}">edit</a>			
@@ -39,14 +42,20 @@
 					</tr>
 				</tbody>
 			</table>
-			<hr>
+
+			<br>
+			<br>
+			<br>
 			<div class="col-lg-12">
 				<a href="{% url 'user:edit_bio' request.user.username %}" class="float-right">edit</a>
 				<h4 class="float-left">Profile Information</h4>
 			</div>
 			<!-- Table for user bio -->
 			<br>
-			<p>Profile image here</p>
+			{% if request.user.Profile.avatar.url %}
+			<img src="{{ request.user.Profile.avatar.url }}" class="img-responsive" alt="profile picture of {% if user.get_full_name %}{{user.first_name}} {{user.last_name}} with username: {{user.username}}{% else %}username: {{user.username}}{% endif %}" style="width:100px; height: 100px">
+			{% endif %}
+			<br>
 			<table class="table table-hover">
 				<tbody>
 					<tr>
@@ -56,6 +65,14 @@
 					<tr>
 						<th scope="row">Bio</th>
 						<td>{% if request.user.profile.bio %}{{request.user.profile.bio}}{% else %}<i>add now</i>{% endif %}</td>
+					</tr>
+					<tr>
+						<th scope="row">Hire me if you want</th>
+						<td>{% if request.user.profile.hire_me_if_want %}{{request.user.profile.hire_me_if_want}}{% else %}<i>add now</i>{% endif %}</td>
+					</tr>
+					<tr>
+						<th scope="row">I am looking for</th>
+						<td>{% if request.user.profile.looking_for %}{{request.user.profile.looking_for}}{% else %}<i>add now</i>{% endif %}</td>
 					</tr>
 				</tbody>
 			</table>			

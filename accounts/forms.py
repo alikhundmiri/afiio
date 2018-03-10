@@ -58,14 +58,22 @@ class ProfileForm(forms.ModelForm):
         fields = [
         "avatar",
         "bio",
-        "profession"
+        "profession",
+        "hire_me_if_want",
+        "looking_for",
         ]
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.fields["bio"].help_text = "A brief description about you are your work or profession in less than 500 words"
         self.fields["profession"].help_text = "Your Profession! Be creative and go wild, you have a limit of 30 characters"
-
+        self.fields["hire_me_if_want"].help_text = "List your Specilisations in less than 100 words, example: HTML, CSS, Blockchain, Android App development, VR, AR, etc."
+        self.fields["hire_me_if_want"].label = "Hire me if you want:"
+        self.fields["hire_me_if_want"].widget.attrs['placeholder'] = "Leave blank to hide this on your Portfolio"
+        
+        self.fields["looking_for"].help_text = "In less than 100 words. Example: Contract, Full time Job, Part time Job, Freelancing, Remote Worker, Digital Nomad, etc."
+        self.fields["looking_for"].label = "I am looking for:"
+        self.fields["looking_for"].widget.attrs['placeholder'] = "Leave blank to hide this on your Portfolio"
     def clean_avatar(self):
         avatar = self.cleaned_data.get('avatar')
 

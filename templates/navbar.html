@@ -16,20 +16,43 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="{% url 'user:create_product' request.user.username %}">Link</a>
 
-							<a class="dropdown-item" href="{% url 'user:create_category' request.user.username %}">Category</a>
+							<a class="dropdown-item disabled" href="{% url 'user:create_category' request.user.username %}">
+								Category
+								<sup>
+									<span class="badge badge-success">
+										Coming Soon!
+									</span>
+								</sup>
+							</a>
 						</div>
 					</li>
-
-
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Profile
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
-							<a class="dropdown-item disabled" href="#">Social Media</a>
+							<a class="dropdown-item" href="{% url 'settings' %}">Settings
+								<sup>
+									<span class="badge badge-info">
+										New!
+									</span>
+								</sup>
+							</a>
+							<a class="dropdown-item disabled" href="#">Social Media
+								<sup>
+									<span class="badge badge-success">
+										Coming Soon!
+									</span>
+								</sup>
+							</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item disabled" href="#">Social Integrations</a>
+							<a class="dropdown-item disabled" href="#">Social Integrations
+								<sup>
+									<span class="badge badge-success">
+										Coming Soon!
+									</span>
+								</sup>
+							</a>
 						</div>
 					</li>
 

@@ -86,7 +86,7 @@ def settings_page(request):
 
 @login_required
 def new_bio(request, username=None):
-	form = ProfileForm(request.POST or None)
+	form = ProfileForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.user = request.user
@@ -107,7 +107,7 @@ def edit_bio(request, username=None):
 	else:
 		raise Http404
 	instance = get_object_or_404(Profile, user__username=request.user)
-	form = ProfileForm(request.POST or None, instance=instance)
+	form = ProfileForm(request.POST or None, request.FILES or None, instance=instance)
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.user = request.user

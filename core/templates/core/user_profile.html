@@ -10,8 +10,24 @@
 .user-details{
 	padding: 15px;
 	background: #73FFCB;
-	padding-top: 50px;
+	padding-top: 15px;
 	border-radius: 10px;
+}
+
+.user-specialties{
+	padding: 5px;
+	background: #6BFFC8;
+	border-radius: 10px;
+	min-height: 10px;
+	box-shadow: 0px 10px 20px #2BFFB1;
+}
+
+.contact_button{
+	color: gray;
+}
+
+.contact_button:hover {
+	color: #122C34;
 }
 
 .product-list {
@@ -87,7 +103,14 @@
 		<div class="col-lg-12 text-center">
 			<div class="row user-details">
 				<div class="col-lg">
-					<img src="https://placeimg.com/100/100/tech" class="img-responsive" alt="Cinque Terre" style="width:100px; height: 100px">
+					{% if request.user.username == user.username %}
+					<a class="float-right" href="{% url 'user:edit_bio' request.user.username %}">edit</a>
+					<br>
+					{% endif %}
+					{% if user.profile.avatar %}
+					<img src="{{ user.profile.avatar.url }}" class="img-responsive" alt="profile picture of {% if user.get_full_name %}{{user.first_name}}{{user.last_name}} with username: {{user.username}}.{% else %}username: {{user.username}}{% endif %}" style="width:100px; height: 100px">
+					<br>
+					{% endif %}
 					{% if user.get_full_name %}<h2>{{user.first_name}} <b>{{user.last_name}}</b></h2><p>@{{user.username}}</p>{% else %}<p>@{{user.username}}</p>{% endif %}
 					
 					{% if user.profile.profession %}
@@ -99,6 +122,28 @@
 					<p class="lead">{{user.profile.bio|linebreaks}}</p>
 					{% endif %}
 					<!-- <p class="lead">Facebook | Instagram | Twitter </p> -->
+					<div class="row user-specialties">
+						
+						{% if user.profile.hire_me_if_want %}
+						<div class="col-lg col-md">
+							<p><b>Hire me if you want</b></p>
+							{{user.profile.hire_me_if_want}}
+						</div>
+						{% endif %}
+
+						{% if user.profile.looking_for %}
+						<div class="col-lg col-md">
+							<p><b>I am looking for</b></p>
+							{{user.profile.looking_for}}
+						</div>
+						{% endif %}
+						{% if user.email %}
+						<div class="col-lg-12 col-md-12">
+							<a class="contact_button" href="mailto:{{user.email}}?Subject=Hello%20{% if user.get_full_name %}{{user.first_name}}%20{{user.last_name}}{% else %}{{user.username}}{% endif %},%20we%20saw%20your%20profile%20on%20Afiio.com.%20">contact</a>
+						</div>
+						{% endif %}
+					</div>
+
 				</div>
 			</div>
 			{% if request.user.username == user.username %}
@@ -110,7 +155,7 @@
 			{% endif %}
 
 
-<!-- 			{% for product in products %}
+			{% for product in products %}
 
 			<div class="row">
 				<div class="col-lg product-list {% if product.public_display %}product-item{% else %}product-item-private{% endif %}">
@@ -131,7 +176,6 @@
 								edit
 							</a>
 							{% endif %}
-							
 						</div>
 					</div>
 				</div>
@@ -141,9 +185,14 @@
 				<div class="col-lg product-list product-empty">
 					<p>No Products yet</p>
 				</div>
-			</div>			
+			</div>
 			{% endfor %}
-		-->
+
+
+			{% comment "Views are not working properly" %}
+
+			<!-- COMPLETE VIEW FOR THE NEW UI -->
+<!-- 
 		{% for cat in all_category %}
 		{% with products=cat.type_category.all %}
 		{% if products|length >= 1 %}
@@ -224,8 +273,29 @@
 		</div>
 		{% endfor %}
 		{% endif %}
+	-->
 
-	</div>
+
+	<!-- BARE BONES CODE FOR NEW UI -->
+<!-- {% for cat in all_category %}
+    {% with products=cat.type_category.all %}
+        <h5>{{cat.category_name}}</h5>
+        {% if products|length %}
+            {% for pro in products %}
+                <p>{{ pro }}</p>
+            {% endfor %}
+        {% else %}
+        <p>Empty :(</p>    
+        {% endif %}
+        <br>
+    {% endwith %}
+{% endfor %}
+{% for pro in product_exclude %}
+    <p>{{ pro }}</p>
+    {% endfor %} -->
+    {% endcomment %}
+
+</div>
 </div>
 </div>
 {% if not request.user.is_authenticated %}

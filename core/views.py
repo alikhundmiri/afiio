@@ -26,24 +26,27 @@ def user_profile(request, username=None):
 	if username == request.user.username:
 		# p_roduct = product.objects.annotate(number_of_links=Count('user', distinct=True))
 
-		all_category = product_category.objects.filter(user=user)
-		product_exclude = product.objects.exclude(id__in=all_category.values_list('type_category__id',flat=True)).filter(user=user)
+		# all_category = product_category.objects.filter(user=user).distinct()
+		# product_exclude = product.objects.filter(user=user).exclude(id__in=all_category.values_list('type_category__id')).distinct()
+		# product_exclude = product.objects.filter(user=user).exclude(id__in=all_category.values_list('type_category__id',flat=True))
 
-		# products = product.objects.filter(user=user).order_by('-public_display', '-updated')
+		products = product.objects.filter(user=user).order_by('-public_display', '-updated')
 	else:
-		# products = product.objects.filter(user=user, public_display=True).order_by('-updated')
-		all_category = product_category.objects.filter(user=user)
-		product_exclude = product.objects.exclude(id__in=all_category.values_list('type_category__id',flat=True)).filter(user=user, public_display=True)
-	print("============   All catagory   ===============")
-	print(all_category)
-	print("============   Product exclude   ===============")
-	print(product_exclude)
+		products = product.objects.filter(user=user, public_display=True).order_by('-updated')
+		# all_category = product_category.objects.filter(user=user)
+		# product_exclude = product.objects.filter(user=user, public_display=True).exclude(id__in=all_category.values_list('type_category__id',flat=True))
+
+	# print("============   All catagory   ===============")
+	# print(all_category)
+
+	# print("============   Product exclude   ===============")
+	# print(product_exclude)
 	
 	context = {
-		# "products" : products,
+		"products" : products,
 		"user" : user,
-		"all_category" : all_category,
-		"product_exclude" : product_exclude,
+		# "all_category" : all_category,
+		# "product_exclude" : product_exclude,
 	}
 	return render(request, 'core/user_profile.html', context)
 
@@ -109,7 +112,9 @@ def edit_product(request, slug=None, username=None):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.user = request.user
+
 		instance.save()
+
 		# form.save_m2m()
 		# catagory_utils.set_revenue_details(instance.catagory.slug)
 		return HttpResponseRedirect("/")
@@ -194,6 +199,11 @@ def edit_category(request, slug=None, username=None):
 	return render(request, 'general_form.html', context)
 
 
+def random_user(request):
+	context = {
+
+	}
+	return render(request, 'random_user.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def super_user(request, username=None):
@@ -204,7 +214,7 @@ def super_user(request, username=None):
 	# no_links = products.objects.filter()
 	no_links2 = product.objects.annotate(number_of_links=Count('user', distinct=True))
 	# all_cats = product_catagory.objects.annotate(number_of_products=Count('catagory', distinct=True))
-	print(no_links2)
+	# print(no_links2)
 	u_last24h = User.objects.filter(date_joined__gte=time_24_hours_ago)
 
 	context = {
