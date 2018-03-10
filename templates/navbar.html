@@ -11,13 +11,15 @@
 					
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Create
+							<i class="fas fa-plus"></i> Create
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{% url 'user:create_product' request.user.username %}">Link</a>
+							<a class="dropdown-item" href="{% url 'user:create_product' request.user.username %}">
+								<i class="fas fa-link"></i> Link
+							</a>
 
 							<a class="dropdown-item disabled" href="{% url 'user:create_category' request.user.username %}">
-								Category
+								<i class="fas fa-anchor"></i> Category
 								<sup>
 									<span class="badge badge-success">
 										Coming Soon!
@@ -28,10 +30,10 @@
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Profile
+							<i class="fas fa-user"></i> Profile
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{% url 'settings' %}">Settings
+							<a class="dropdown-item" href="{% url 'settings' %}"><i class="fas fa-cogs"></i> Settings
 								<sup>
 									<span class="badge badge-info">
 										New!
@@ -41,7 +43,7 @@
 							<a class="dropdown-item disabled" href="#">Social Media
 								<sup>
 									<span class="badge badge-success">
-										Coming Soon!
+										<i class="fas fa-plus"></i> Coming Soon!
 									</span>
 								</sup>
 							</a>
@@ -49,7 +51,7 @@
 							<a class="dropdown-item disabled" href="#">Social Integrations
 								<sup>
 									<span class="badge badge-success">
-										Coming Soon!
+										<i class="fas fa-plus"></i> Coming Soon!
 									</span>
 								</sup>
 							</a>
@@ -57,18 +59,18 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'logout' %}">Logout</a>
+						<a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
 					</li>
 
 					{% else %}
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'price' %}">Pricing</a>
+						<a class="nav-link" href="{% url 'price' %}"><i class="fas fa-dollar-sign"></i> Pricing</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'about' %}">About</a>
+						<a class="nav-link" href="{% url 'about' %}"><i class="fas fa-info-circle"></i> About</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'login' %}">login</a>
+						<a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> login</a>
 					</li>
 					{% endif %}
 				</ul>
