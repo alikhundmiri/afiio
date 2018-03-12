@@ -104,7 +104,7 @@
 	<meta property="og:url" content="{{ request.build_absolute_uri }}" />
 	<meta property="og:title" content="{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s Portfolio on Afiio.com" />
 	<meta property="og:description" content="{{user.profile.bio|truncatechars:100}}" />
-	<meta property="og:image" content="http://graphics8.nytimes.com/images/2011/12/08/technology/bits-newtwitter/bits-newtwitter-tmagArticle.jpg" />
+	<meta property="og:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_logo.png" />
 {% endblock %}
 
 
