@@ -8,7 +8,7 @@ from django.urls import reverse
 from .models import product, product_category
 from .forms import ProductForm, CategoryForm
 import datetime
-
+from .image_generation import generate_image
 # Create your views here.
 def index(request):
 	if request.user.is_authenticated:
@@ -20,8 +20,6 @@ def index(request):
 
 def user_profile(request, username=None):
 	# users = User.objects.all()
-
-
 	user = get_object_or_404(User, username=username)#.select_related('profile')
 	if username == request.user.username:
 		# p_roduct = product.objects.annotate(number_of_links=Count('user', distinct=True))
@@ -207,6 +205,7 @@ def random_user(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def super_user(request, username=None):
+	# generate_image()
 	time_24_hours_ago = datetime.datetime.now() - datetime.timedelta(days=1)
 
 	users = User.objects.all().count()
@@ -223,3 +222,10 @@ def super_user(request, username=None):
 		"u_last24h" : u_last24h,
 	}
 	return render(request, 'core/super_user.html', context)
+
+def save_image_test(request, username=None):
+
+	context = {
+
+	}
+	return render(request, 'core/user_profile.html', context)
