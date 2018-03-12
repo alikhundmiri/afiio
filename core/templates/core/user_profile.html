@@ -173,8 +173,8 @@
 						{% if user.email %}
 						<div class="col-lg-12 col-md-12">
 							<a class="contact_button" href="mailto:{{user.email}}?Subject=Hello%20{% if user.get_full_name %}{{user.first_name}}%20{{user.last_name}}{% else %}{{user.username}}{% endif %},%20we%20saw%20your%20profile%20on%20Afiio.com.%20"><i class="far fa-envelope"></i> contact</a>
-							 | 
-							<a href=""><i class="fab fa-twitter"></i> Share on Twitter</a>
+							 <!-- | 
+							<a href=""><i class="fab fa-twitter"></i> Share on Twitter</a> -->
 						</div>
 						{% endif %}
 					</div>
