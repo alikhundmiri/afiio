@@ -2,7 +2,8 @@
 {% load static %}
 
 
-{% block title %} {% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s profile on {{ block.super }}{% endblock %}
+{% block title %} {% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %} | Afiio {% endblock %}
+
 
 {% block header0 %}
 <style type="text/css">
@@ -93,9 +94,9 @@
 </style>
 {% endblock %}
 
-{% block meta_description %}{% if user.profile.profession %}{{user.profile.profession }}{% else %}Internet Business card available for online reference and sharing many links to your projects, stored else where on the internet!.{% endif %}{% endblock %}
+{% block meta_description %}{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s online business card has {{products|length}} projects on Afiio || {{user.profile.profession}} {% endblock %}
 
-{% block meta_author %}{{user.username}}{% endblock %}
+{% block meta_author %}@{{user.username}}{% endblock %}
 
 {% block other_meta %}
 	<meta name="twitter:card" content="summary" />
@@ -103,7 +104,7 @@
 	<meta name="twitter:creator" content="@{{user.username}}" />
 	<meta property="og:url" content="{{ request.build_absolute_uri }}" />
 	<meta property="og:title" content="{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s Portfolio on Afiio.com" />
-	<meta property="og:description" content="{{user.profile.bio|truncatechars:100}}" />
+	<meta property="og:description" content="{{user.profile.bio|truncatechars:150}}" />
 	<meta property="og:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_logo.png" />
 {% endblock %}
 

@@ -19,7 +19,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 from accounts.views import (settings_page, login_view, logout_view, register_view, edit_bio, new_bio)
-from core.views import index, about, price, random_user
+from core.views import index, about, price, random_user 
+
+'''user_card,new_user_card,'''
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +32,10 @@ urlpatterns = [
     path('price/', price, name='price'),
     path('browse/', random_user, name='random_user'),
     path('settings/', settings_page, name='settings'),
+    
+    # path('generate/cards/@<str:username>/', user_card, name='user_card'),
+    # path('generate/cards/@<str:username>/new', new_user_card, name='new_user_card'),
+
     path('', include('core.urls', namespace='user')),
 ]
 

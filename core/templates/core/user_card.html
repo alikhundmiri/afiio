@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Card Generated</title>
+	<link href="{% static 'base/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'sticky-footer-navbar.css' %}" rel="stylesheet">
+	<script defer src="{% static 'base/fontawesome/svg-with-js/js/fontawesome-all.js' %}"></script>
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,400" rel="stylesheet">
+	<style>@import url('https://fonts.googleapis.com/css?family=Nunito:200,400');</style>
+
+	<style>
+
+	body {
+		font-family: 'Nunito', sans-serif;
+		padding-top: 20px;
+	}
+	h1{
+		font-size: 100px;
+	}
+	p{
+		font-size: 30px;
+	}	
+	.base-div-fullscreen {
+		position: fixed;
+		color: white;
+		background-color: #A32D09;
+		border-radius: 100px;
+		padding: 20px;
+		text-align: center;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+	.logo-afiio {
+		width:100px; 
+		height: 100px;
+		text-align: left;
+		margin-left: 30px;
+
+	}
+	.lower-end{
+		margin-top: 100px;
+	}
+
+</style>
+</head>
+<body>
+	<div class="logo-afiio">
+		<img src="{% static 'images/Afiio_logo.png' %}" class="responsive logo-afiio" alt="Afiio logo on landing page. Created By Ali Khundmiri">
+		
+	</div>
+	<div class="base-div-fullscreen">
+		<h1>
+			{% if user.get_full_name %}
+			{{user.first_name}} <b>{{user.last_name}}</b>
+			{% else %}
+			<i>@{{user.username}}</i>
+			{% endif %}
+		</h1>
+		{% if user.profile.profession %}
+		<p class="lead">{{user.profile.profession }}</p>
+		{% endif %}
+
+		{% if user.profile.bio %}
+		<p class="lead">{{user.profile.bio|linebreaks}}</p>
+		{% endif %}
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-6">
+					<p><b>Hire me if you want:</b><br>
+					{{user.profile.hire_me_if_want}}</p>
+				</div>
+				<div class="col-lg-6">
+					<p>
+						<b>I am looking for:</b><br>
+						{{user.profile.looking_for}}
+					</p>
+				</div>
+			</div>
+		</div>		
+		<div class="lower-end">
+			<p>check out my {{product_count}} projects at <u>afiio.com/@{{user.username}}</u></p>
+		</div>
+	</div>
+</body>
+</html>

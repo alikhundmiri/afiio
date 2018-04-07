@@ -1,5 +1,5 @@
 	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container">
 			<a class="navbar-brand" href="{% url 'user:index' %}">Afiio<sup style="color: red">alpha <sup style="color: red">test</sup></sup></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,8 +17,8 @@
 							<a class="dropdown-item" href="{% url 'user:create_product' request.user.username %}">
 								<i class="fas fa-link"></i> Link
 							</a>
-
-							<a class="dropdown-item disabled" href="{% url 'user:create_category' request.user.username %}">
+							<!-- href="{% url 'user:create_category' request.user.username %}" -->
+							<a class="dropdown-item disabled" >
 								<i class="fas fa-anchor"></i> Category
 								<sup>
 									<span class="badge badge-success">

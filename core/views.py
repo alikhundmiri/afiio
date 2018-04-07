@@ -9,7 +9,21 @@ from .models import product, product_category
 from .forms import ProductForm, CategoryForm
 import datetime
 from .image_generation import generate_image
+# from .phantomjs_test
 # Create your views here.
+
+def card(request, username=None):
+	user = get_object_or_404(User, username=username)
+	product_count = product.objects.filter(user=user, public_display=True).count()
+
+	context = {
+		"user" : user,
+		"product_count" : product_count,
+	}
+	return render(request, 'core/user_card.html', context)
+
+
+
 def index(request):
 	if request.user.is_authenticated:
 		return HttpResponseRedirect(reverse('user:user_profile', args=[request.user.username]))
@@ -53,6 +67,7 @@ def limit_reach(request, username=None):
 	return render(request, 'limit_reach.html')
 
 def about(request):
+
 	return render(request, 'about.html')
 
 def price(request):

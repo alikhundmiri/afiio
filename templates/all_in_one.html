@@ -2,14 +2,25 @@
 {% load static %}
 
 
-{% block title %}About | {{ block.super }}{% endblock %}
+{% block title %}{{ block.super }}{% endblock %}
 
 {% block header0 %}
 {% endblock %}
 
-{% block meta_description %}This website was created by Ali Khundmiri, who wanted a place to store all the projects he has done, specially built to showcase it all to the world. {% endblock %}
+{% block meta_description %}The simplest Portfolio website for Indie Hackers! Best way to showcase your websites to your audience. Bonus! Afiio.com doubles up as your online Business Card. {% endblock %}
 
 {% block meta_author %}Ali Khundmiri{% endblock %}
+
+{% block other_meta %}
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@newlifeshoes" />
+	<meta name="twitter:creator" content="@newlifeshoes" />
+	<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+	<meta property="og:title" content="Afiio.com" />
+	<meta property="og:description" content="The simplest Portfolio website for Indie Hackers! Best way to showcase your websites to your audience. Bonus! Afiio.com doubles up as your online Business Card. " />
+	<meta property="og:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_alpha1_landing_social_600x600.png" />
+{% endblock %}
+
 
 {% block content_2 %}
 <section style="height: 100%">
@@ -18,10 +29,10 @@
 			<div class="col-lg-12 text-center">
 				<img src="{% static 'images/Afiio_logo.png' %}" class="responsive" alt="Afiio logo on landing page. Created By Ali Khundmiri" style="width:250px; height: 250px">
 				<!-- <h1 class="mt-5">Afiio</h1> -->
-				<p class="lead">Your Products, Portfolio,<!-- Social Account,--> and links<br>Convenient for you to share from one place!</p>
+				<p style="font-size: 1.4em">Your Products, Services,<!-- Social Account,--> and Links<br>Best way to showcase your websites to your audience</p>
 				<ul class="list-unstyled">
-					<li>Limied time Free Registration</li>
-					<li><i>For the purpose of Alpha testing</i></li>
+					<li><p>Limied time Free Registration</p></li>
+					<li><i><p>For the purpose of Alpha testing</p></i></li>
 				</ul>
 			</div>
 			<div class="col-3 text-center">

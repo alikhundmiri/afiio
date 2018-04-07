@@ -23,14 +23,18 @@ urlpatterns = [
     path('', views.index , name='index'),
 
     path('@<str:username>/', include([
+
         path('', views.user_profile, name='user_profile'),
+        path('generated/card/', views.card, name='card'),
+        # path('generated/card/new', views.new_card, name='new_card'),
+
         path('superuser/', views.super_user, name='super_user'),
         path('new_bio/', new_bio, name='new_bio'),
         path('edit_bio/', edit_bio, name='edit_bio'),
         path('user_info/', first_last_name, name='first_last_name'),
         path('new/', views.create_product, name='create_product'),
         path('new_category/', views.create_category, name='create_category'),
-        
+         
         path('limit_reach/', views.limit_reach, name='limit_reach'),
         path('password/', change_password, name='change_password'),
         path('edit_category/<slug:slug>/', views.edit_category, name='edit_category'),
