@@ -14,19 +14,29 @@
 
 {% block other_meta %}
 
-	<meta property="og:url" content="{{ request.build_absolute_uri }}" />
-	<meta property="og:title" content="Afiio.com" />
-	<meta property="og:description" content="The simplest Portfolio website for Indie Hackers! Best way to showcase your websites to your audience. Bonus! Afiio.com doubles up as your online Business Card. " />
-	<meta property="og:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_alpha1_landing_social_600x600.png" />
-	
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:site" content="@newlifeshoes" />
-	<meta name="twitter:creator" content="@newlifeshoes" />
-	<meta name="twitter:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_logo_curve.png">
-	<meta name="twitter:title" content="Afiio.com The simplest Portfolio website for Indie Hackers!">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<meta name="twitter:site" content="@newlifeshoes">
+
+	<meta name="twitter:creator" content="@newlifeshoes">
+
+	<meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+	<meta property="og:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_alpha1_landing_social_600x600.png">
+
+	<meta name="twitter:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_alpha1_landing_social_600x600.png">
+
+	<meta name="twitter:title" content="Afiio.com - The simplest Portfolio website for Indie Hackers!">
+
+	<meta property="og:title" content="Afiio.com - The simplest Portfolio website for Indie Hackers!">
+
 	<meta name="twitter:description" content="Best way to showcase your websites to your audience. Bonus! Afiio.com doubles up as your online Business Card.">
-	
+
+	<meta property="og:description" content="The simplest Portfolio website for Indie Hackers! Best way to showcase your websites to your audience. Bonus! Afiio.com doubles up as your online Business Card. ">	
+
 {% endblock %}
+
+
 
 
 {% block content_2 %}
