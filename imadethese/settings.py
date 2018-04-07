@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', 'j&j_0anvef4@$^$l6-0md+5(sskkb)3mcyrd7irkob*ax1)ve0')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
 'https://afiio.herokuapp.com/',
@@ -180,8 +180,8 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
 CUSTOM_PROJECT_NAME = "afiio"
 
 AWS_STORAGE_BUCKET_NAME = 'side-projects'
-AWS_ACCESS_KEY_ID = os.environ.get('S3_KEY', 'AKIAIRPJM7Y5LVJXUWRQ')
-AWS_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET', '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')
+AWS_ACCESS_KEY_ID = os.environ.get('S3_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET')
 
 # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
 # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
