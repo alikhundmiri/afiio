@@ -94,6 +94,7 @@
 </style>
 {% endblock %}
 
+
 {% block meta_description %}{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s online business card has {{products|length}} projects on Afiio || {{user.profile.profession}} {% endblock %}
 
 {% block meta_author %}@{{user.username}}{% endblock %}
@@ -108,9 +109,9 @@
 
 	<meta property="og:url" content="{{ request.build_absolute_uri }}">
 
-	<meta name="twitter:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_logo_curve.png">
+	<meta name="twitter:image" content="https://s3.amazonaws.com/side-projects/afiio/media/profiles/ali/card/ali_user_card_1.png">
 
-	<meta property="og:image" content="https://side-projects.s3.amazonaws.com/afiio/static/images/Afiio_logo_curve.png">
+	<meta property="og:image" content="https://s3.amazonaws.com/side-projects/afiio/media/profiles/ali/card/ali_user_card_1.png">
 
 	<meta name="twitter:title" content="{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s Portfolio on Afiio.com || {{user.profile.profession}}">
 
