@@ -21,7 +21,6 @@ class CategoryForm(forms.ModelForm):
         self.fields["category_name"].help_text = "Enter A new unique category name!."
         self.user = kwargs.pop('user', None)
 
-# form to create a new product
 class ProductForm(forms.ModelForm):
     # revenue_source = forms.ModelMultipleChoiceField(queryset = revenue_source.objects.all(), widget=forms.CheckboxSelectMultiple())
     # tags = forms.ModelMultipleChoiceField(queryset = taggers.objects.all(), widget=forms.CheckboxSelectMultiple())

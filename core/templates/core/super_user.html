@@ -46,16 +46,17 @@
 
 				<div class="col-md-5 user-square text-center">
 
-						<a href="{% url 'user:user_profile' user.username %}" target="_blank">
-							<h4>
-								{{user}}
-							</h4>
-						</a>
+					<a href="{% url 'user:user_profile' user.username %}" target="_blank">
+						<h4>
+							{{user}}
+						</h4>
+					</a>
 				</div>
 				{% endfor %}
 			</div>
 			<hr>
 		</div>
+		{% include 'core/link_count_snippet.html' %}
 	</div>
 </div>
 {% endblock %}

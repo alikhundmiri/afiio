@@ -33,7 +33,8 @@ class product(models.Model):
 	# If the product is uploaded by the maker, this needs to be done manually.
 	# product_verified 		=			models.BooleanField(default=False)
 	website					=			models.URLField(max_length=1000, blank=False, null=False, help_text="Your Landing page URL. When you choose to advert, your advert will divert to this URL.")
-	# other website which are twins to this
+	# count the number of time this link was clicked
+	redirect_count			=			models.PositiveIntegerField(default=0)
 
 	timestamp				=			models.DateTimeField(auto_now=False, auto_now_add=True)
 	updated					=			models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -72,7 +73,8 @@ class Profile(models.Model):
 	looking_for				=			models.CharField(max_length=100, blank=True)
 
 	paid_user				=			models.BooleanField(default=False)
-
+	Updated_card			=			models.BooleanField(default=False) 				# <-- signal if the social card is updated
+	card_name				=			models.CharField(max_length=100, blank=True)	# <-- the name of social card image
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

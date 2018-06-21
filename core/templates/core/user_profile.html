@@ -113,9 +113,9 @@
 
 	<meta property="og:image" content="https://s3.amazonaws.com/side-projects/afiio/media/profiles/ali/card/ali_user_card_1.png">
 
-	<meta name="twitter:title" content="{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s Portfolio on Afiio.com || {{user.profile.profession}}">
+	<meta name="twitter:title" content="{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %} on Afiio.com || {{user.profile.profession}}">
 
-	<meta property="og:title" content="{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %}'s Portfolio on Afiio.com || {{user.profile.profession}}">
+	<meta property="og:title" content="{% if user.get_full_name %}{{user.first_name}} {{user.last_name}}{% else %}{{user.username}}{% endif %} on Afiio.com || {{user.profile.profession}}">
 
 	<meta name="twitter:description" content="{{user.profile.bio|truncatechars:150}}">
 
@@ -204,7 +204,10 @@
 				</div>
 			</div>
 			{% endif %}
-
+<!-- 
+{% comment %}
+{{ product.website }}
+{% endcomment %} -->
 
 			{% for product in products %}
 
@@ -212,14 +215,14 @@
 				<div class="col-lg product-list {% if product.public_display %}product-item{% else %}product-item-private{% endif %}">
 					<div class="row">
 						<div class="col-lg-9 col-md-9 col-sm-9">
-							<h3><a href="{{ product.website }}" target="_blank">{{ product.product_name }}</a></h3>
+							<h3><a href="{% url 'core:redirect_link' user.username product.slug %}" target="_blank">{{ product.product_name }}</a></h3>
 							{% if product.product_description %}
 							<p>{{ product.product_description|linebreaks }}</p>
 							{% endif %}
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 links-section">
 
-							<a href="{{ product.website }}" class="btn btn-sm btn-danger">
+							<a href="{% url 'core:redirect_link' user.username product.slug %}" class="btn btn-sm btn-danger">
 								link
 							</a>
 							{% if request.user.username == user.username %}

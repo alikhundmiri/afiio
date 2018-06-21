@@ -32,6 +32,24 @@ def index(request):
 	}
 	return render(request, 'all_in_one.html', context)
 
+
+# this function redirects the link after incrementing a counter
+def redirect_link(request, username=None, slug=None):
+	# get the item
+	p = get_object_or_404(product, slug=slug)
+
+	# increment the counter
+	p.redirect_count += 1
+	# save the value
+	p.save()
+	# print(p.website)
+	# print(p.redirect_count)
+
+	# redirect to the link
+	link = p.website + "?ref=afiio.com"
+	return HttpResponseRedirect(link)
+
+
 def user_profile(request, username=None):
 	# users = User.objects.all()
 	user = get_object_or_404(User, username=username)#.select_related('profile')
@@ -220,6 +238,8 @@ def random_user(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def super_user(request, username=None):
+	user = get_object_or_404(User, username=username)
+
 	# generate_image()
 	time_24_hours_ago = datetime.datetime.now() - datetime.timedelta(days=1)
 
@@ -230,13 +250,37 @@ def super_user(request, username=None):
 	# all_cats = product_catagory.objects.annotate(number_of_products=Count('catagory', distinct=True))
 	# print(no_links2)
 	u_last24h = User.objects.filter(date_joined__gte=time_24_hours_ago)
+	user_links = product.objects.filter(user=user).order_by('-redirect_count', '-updated')
 
 	context = {
 		"users" : users,
 		'links' : links,
+		'user_links' : user_links,
 		"u_last24h" : u_last24h,
 	}
 	return render(request, 'core/super_user.html', context)
+
+@user_passes_test(lambda u: u.is_authenticated)
+def stats(request, username=None):
+	user_ = get_object_or_404(User, username=username)
+
+	# if user_ != request.user:
+	# 	raise Http404
+	
+
+	if request.user.is_superuser:
+		return super_user(request, username=username)
+
+	user_links = product.objects.filter(user=request.user).order_by('-redirect_count', '-updated')
+
+	context = {
+		'user_links' : user_links,
+	}
+	return render(request, 'core/user_stats.html', context)
+
+
+
+
 
 def save_image_test(request, username=None):
 

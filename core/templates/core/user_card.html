@@ -36,7 +36,7 @@
 	.logo-afiio {
 		width:100px; 
 		height: 100px;
-		text-align: center;
+		text-align: right;
 		margin-left: 30px;
 
 	}
@@ -53,9 +53,6 @@
 </style>
 </head>
 <body>
-	<div class="logo-afiio">
-		<img src="{% static 'images/Afiio_logo.png' %}" class="responsive logo-afiio" alt="Afiio logo on landing page. Created By Ali Khundmiri">
-	</div>
 	<div class="base-div-fullscreen">
 		<h1>
 			{% if user.get_full_name %}
